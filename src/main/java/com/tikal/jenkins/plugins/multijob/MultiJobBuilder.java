@@ -61,6 +61,7 @@ import org.kohsuke.stapler.StaplerRequest;
 
 import com.tikal.jenkins.plugins.multijob.MultiJobBuild.SubBuild;
 import com.tikal.jenkins.plugins.multijob.PhaseJobsConfig.KillPhaseOnJobResultCondition;
+import com.tikal.jenkins.plugins.multijob.ShellCondition;
 
 import org.jenkinsci.plugins.tokenmacro.TokenMacro;
 
@@ -178,6 +179,17 @@ public class MultiJobBuilder extends Builder implements DependecyDeclarer {
                     continue;
                 }
             }
+
+            // Added by Rapid7
+            // TODO: Migrate to the upstream support groovy condition (see above)
+            if (phaseConfig.hasRunCondition()) {
+                ShellCondition runCondition = new ShellCondition(phaseConfig.getRunCondition());
+                if (!runCondition.runPerform(multiJobBuild, listener)) {
+                    listener.getLogger().println(String.format("%s sub job does not pass run condition.", subJob.getName()));
+                    continue;
+                }
+            }
+
             if (phaseConfig.isBuildOnlyIfSCMChanges()){
             	if( getScmChange(subJob,phaseConfig,multiJobBuild ,listener,launcher ) >= 4) {
             		continue;

@@ -56,6 +56,7 @@ public class PhaseJobsConfig implements Describable<PhaseJobsConfig> {
 	private boolean enableCondition;
 	private boolean abortAllJob;
 	private String condition;
+	private String runCondition;
 	private List<AbstractBuildParameters> configs;
 	private KillPhaseOnJobResultCondition killPhaseOnJobResultCondition = KillPhaseOnJobResultCondition.NEVER;
 	private boolean buildOnlyIfSCMChanges = false;
@@ -149,6 +150,18 @@ public class PhaseJobsConfig implements Describable<PhaseJobsConfig> {
 		this.currParams = currParams;
 	}
 
+	public boolean hasRunCondition() {
+		return !(runCondition == null || runCondition == "");
+	}
+
+	public String getRunCondition() {
+		return runCondition;
+	}
+
+	public void setRunCondition(String runCondition) {
+		this.runCondition = runCondition;
+	}
+
 	public String getJobProperties() {
 		return jobProperties;
 	}
@@ -179,7 +192,8 @@ public class PhaseJobsConfig implements Describable<PhaseJobsConfig> {
 			KillPhaseOnJobResultCondition killPhaseOnJobResultCondition,
 			boolean disableJob, boolean enableRetryStrategy,
 			String parsingRulesPath, int maxRetries, boolean enableCondition,
-			boolean abortAllJob, String condition, boolean buildOnlyIfSCMChanges) {
+			boolean abortAllJob, String condition, boolean buildOnlyIfSCMChanges,
+			String runCondition) {
 		this.jobName = jobName;
 		this.jobProperties = jobProperties;
 		this.currParams = currParams;
@@ -196,6 +210,17 @@ public class PhaseJobsConfig implements Describable<PhaseJobsConfig> {
 		this.abortAllJob = abortAllJob;
 		this.condition = Util.fixNull(condition);
 		this.buildOnlyIfSCMChanges = buildOnlyIfSCMChanges;
+		this.runCondition = runCondition;
+	}
+
+	@Deprecated
+	public PhaseJobsConfig(String jobName, String jobProperties,
+			boolean currParams, List<AbstractBuildParameters> configs,
+			KillPhaseOnJobResultCondition killPhaseOnJobResultCondition,
+			boolean disableJob, boolean enableRetryStrategy,
+			String parsingRulesPath, int maxRetries, boolean enableCondition,
+			boolean abortAllJob, String condition, boolean buildOnlyIfSCMChanges) {
+		this(jobName, jobProperties, currParams, configs, killPhaseOnJobResultCondition, disableJob, enableRetryStrategy, parsingRulesPath, maxRetries, enableCondition, abortAllJob, condition, buildOnlyIfSCMChanges, null);
 	}
 
 	public List<AbstractBuildParameters> getConfigs() {

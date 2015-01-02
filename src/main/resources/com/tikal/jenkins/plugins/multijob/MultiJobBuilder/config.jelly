@@ -50,6 +50,12 @@
                         </f:entry>
                     </f:block>
                 </f:optionalBlock>
+                <f:entry field="runCondition"
+                        title="Run condition command"
+                        help="/plugin/jenkins-multijob-plugin/help-runCondition.html"
+                        description="${%runConditionDescription(rootURL)}">
+                    <f:textarea class="fixed-width" />
+                </f:entry>
                 <f:block>
                     <f:hetero-list name="configs" hasHeader="true"
                        descriptors="${descriptor.getBuilderConfigDescriptors()}"
