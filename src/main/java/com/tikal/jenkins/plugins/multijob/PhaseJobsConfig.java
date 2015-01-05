@@ -151,7 +151,7 @@ public class PhaseJobsConfig implements Describable<PhaseJobsConfig> {
 	}
 
 	public boolean hasRunCondition() {
-		return !(runCondition == null || runCondition == "");
+		return !(runCondition == null || runCondition.equals(""));
 	}
 
 	public String getRunCondition() {
