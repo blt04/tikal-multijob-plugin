@@ -60,6 +60,8 @@ public class PhaseJobsConfig implements Describable<PhaseJobsConfig> {
 	private List<AbstractBuildParameters> configs;
 	private KillPhaseOnJobResultCondition killPhaseOnJobResultCondition = KillPhaseOnJobResultCondition.NEVER;
 	private boolean buildOnlyIfSCMChanges = false;
+	private boolean enableThrottleGroup;
+	private String throttleGroup;
 
 	public boolean isBuildOnlyIfSCMChanges() {
 		return this.buildOnlyIfSCMChanges;
@@ -186,6 +188,22 @@ public class PhaseJobsConfig implements Describable<PhaseJobsConfig> {
 		return getClass().getSimpleName();
 	}
 
+	public void setThrottleGroup(String throttleGroup) {
+		this.throttleGroup = throttleGroup;
+	}
+
+	public String getThrottleGroup() {
+		return this.throttleGroup;
+	}
+
+	public void setEnableThrottleGroup(boolean enableThrottleGroup) {
+		this.enableThrottleGroup = enableThrottleGroup;
+	}
+
+	public boolean getEnableThrottleGroup() {
+		return enableThrottleGroup;
+	}
+
 	@DataBoundConstructor
 	public PhaseJobsConfig(String jobName, String jobProperties,
 			boolean currParams, List<AbstractBuildParameters> configs,
@@ -193,7 +211,7 @@ public class PhaseJobsConfig implements Describable<PhaseJobsConfig> {
 			boolean disableJob, boolean enableRetryStrategy,
 			String parsingRulesPath, int maxRetries, boolean enableCondition,
 			boolean abortAllJob, String condition, boolean buildOnlyIfSCMChanges,
-			String runCondition) {
+			String runCondition, boolean enableThrottleGroup, String throttleGroup) {
 		this.jobName = jobName;
 		this.jobProperties = jobProperties;
 		this.currParams = currParams;
@@ -211,16 +229,8 @@ public class PhaseJobsConfig implements Describable<PhaseJobsConfig> {
 		this.condition = Util.fixNull(condition);
 		this.buildOnlyIfSCMChanges = buildOnlyIfSCMChanges;
 		this.runCondition = runCondition;
-	}
-
-	@Deprecated
-	public PhaseJobsConfig(String jobName, String jobProperties,
-			boolean currParams, List<AbstractBuildParameters> configs,
-			KillPhaseOnJobResultCondition killPhaseOnJobResultCondition,
-			boolean disableJob, boolean enableRetryStrategy,
-			String parsingRulesPath, int maxRetries, boolean enableCondition,
-			boolean abortAllJob, String condition, boolean buildOnlyIfSCMChanges) {
-		this(jobName, jobProperties, currParams, configs, killPhaseOnJobResultCondition, disableJob, enableRetryStrategy, parsingRulesPath, maxRetries, enableCondition, abortAllJob, condition, buildOnlyIfSCMChanges, null);
+		this.enableThrottleGroup = enableThrottleGroup;
+		this.throttleGroup = throttleGroup;
 	}
 
 	public List<AbstractBuildParameters> getConfigs() {
