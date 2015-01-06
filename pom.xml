@@ -10,7 +10,7 @@
 
 	<artifactId>jenkins-multijob-plugin</artifactId>
 	<version>1.16</version>
-	<name>Jenkins Multijob plugin</name>
+	<name>Jenkins Multijob plugin (with Rapid7 patches)</name>
 	<description>Enabling full hierarchy of Jenkins jobs</description>
 	<url>http://wiki.jenkins-ci.org/display/JENKINS/Multijob+Plugin</url>
 
